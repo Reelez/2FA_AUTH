@@ -1,71 +1,60 @@
-   # Sistema de Autenticación con Verificación en Dos Pasos (2FA) en PHP
+# 🔐 Sistema de Autenticación 2FA en PHP
 
-   Este proyecto es una aplicación web de autenticación segura que implementa inicio de sesión con verificación en dos pasos (2FA) usando Google Authenticator, desarrollada con PHP y MySQL.
+Este proyecto es un sistema de autenticación con **verificación en dos pasos (2FA)** utilizando **PHP**, **MySQL** y **Google Authenticator**. Fue desarrollado como una práctica de seguridad web, incluyendo trazabilidad de eventos como registro, login y logout.
 
-   ## Características
+## 🧩 Funcionalidades principales
 
-   - Registro de nuevos usuarios
-   - Inicio de sesión con nombre de usuario y contraseña
-   - Verificación en dos pasos (2FA) usando Google Authenticator
-   - Redirección al panel de control solo después de autenticación exitosa
-   - Diseño limpio y moderno con CSS personalizado
+- Registro de usuarios con validaciones seguras.
+- Almacenamiento de contraseñas usando `password_hash`.
+- Activación del segundo factor (2FA) con código QR.
+- Verificación del código 2FA con Google Authenticator.
+- Gestión de sesiones seguras y control de acceso.
+- Trazabilidad de eventos (registro, inicio/cierre de sesión).
+- Soporte para dos usuarios de base de datos:
+  - `root` (acceso completo)
+  - `usuario_seguro` (permisos mínimos: SELECT, INSERT, UPDATE)
 
-   ## Requisitos
+## 📂 Estructura general
 
-   - PHP 8.x o superior
-   - MySQL/MariaDB
-   - Servidor Apache (WAMP, XAMPP, etc.)
-   - Composer
+- `registro.php` → Registro de usuario.
+- `login.php` y `login_form.php` → Inicio de sesión.
+- `verificar_2fa.php` → Verificación de código 2FA.
+- `panelControl.php` → Panel principal tras autenticación.
+- `logout.php` → Cierre de sesión y registro del evento.
+- `clases/` → Clases de conexión y trazabilidad.
 
-   ## Instalación
+## 🔄 Flujo del sistema
 
-   1. Clona el repositorio:
-      ```bash
-      git clone https://github.com/tuusuario/sistema-login-2fa.git
-      ```
+1. **Registro:** El usuario se registra y se genera un secreto 2FA.
+2. **Activación 2FA:** Se escanea un código QR generado desde el servidor.
+3. **Inicio de sesión:** El usuario ingresa sus credenciales.
+4. **Verificación 2FA:** Se solicita el código del autenticador.
+5. **Acceso:** Si el código es válido, accede al panel.
+6. **Cierre de sesión:** Se registra el evento y se destruye la sesión.
 
-   2. Instala las dependencias con Composer:
-      ```bash
-      composer install
-      ```
+## 🛠 Tecnologías utilizadas
 
-   3. Configura tu base de datos MySQL y ejecuta el script para crear la tabla de usuarios.
+- PHP 7+
+- MySQL / MariaDB
+- Google Authenticator (libreta `sonata-project/google-authenticator`)
+- HTML / CSS básico
+- PDO para conexión segura a la base de datos
 
-   4. Asegúrate de tener configurado correctamente el acceso a la base de datos en `clases/mysql.inc.php`.
+## 📎 Repositorio del proyecto
 
-   ## Uso
+🔗 [https://github.com/Reelez/2FA_AUTH](https://github.com/Reelez/2FA_AUTH)
 
-   1. Accede a `registro.php` para registrar un nuevo usuario.
-   2. Luego de registrarte, escanea el código QR con Google Authenticator.
-   3. Inicia sesión en `login.php`, luego valida el código 2FA para acceder al Panel de Control.
+---
 
-   ## Capturas de Pantalla
+## ⚠️ Notas
 
-   
+- Requiere Composer para instalar dependencias si se usa la librería de Google Authenticator.
+- Puedes elegir usar el usuario `root` (`123root`) o el usuario seguro `usuario_seguro` (`123seguro`) en `mysql.inc.php`.
+- Asegúrate de que tu servidor tenga habilitado `mbstring` y `openssl`.
 
-   ## Estructura del Proyecto
+---
 
-   ```
-   ├── clases/
-   │   └── mysql.inc.php
-   ├── comunes/
-   │   ├── cabecera4.php
-   │   └── footer.php
-   ├── css/
-   │   ├── login.css
-   │   └── formulario.css
-   ├── formularios/
-   │   └── PanelControl.php
-   ├── jquery/
-   ├── vendor/
-   ├── login.php
-   ├── registro.php
-   ├── validar2fa.php
-   ├── GenerarSecreto.php
-   ├── salir.php
-   └── README.md
-   ```
+## ✍️ Autor
 
-   ## Licencia
+Proyecto realizado por **@Reelez** para prácticas académicas y demostración de seguridad web.
 
-   Este proyecto está licenciado bajo la Licencia AFL-3.0.
